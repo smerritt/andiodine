@@ -85,7 +85,7 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_getDnsFd(
 
 JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 		JNIEnv *env, jclass klass, jstring j_nameserv_addr, jstring j_topdomain, jboolean j_raw_mode, jboolean j_lazy_mode,
-		jstring j_password, jint j_request_hostname_size, jint j_response_fragment_size) {
+		jstring j_password, jint j_request_hostname_size, jint j_response_fragment_size, jstring j_request_type) {
 
 	// XXX strdup leaks
 	const char *__p_nameserv_addr = (*env)->GetStringUTFChars(env,
@@ -94,6 +94,13 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 	struct sockaddr_storage p_nameserv;
 	int p_nameserv_len = get_addr(p_nameserv_addr, 53, AF_INET, 0, &p_nameserv);
 	(*env)->ReleaseStringUTFChars(env, j_nameserv_addr, __p_nameserv_addr);
+
+  const char *__p_request_type = (*env)->GetStringUTFChars(env, j_request_type, NULL);
+	__android_log_print(ANDROID_LOG_ERROR, "iodine", "Request type from vm: %s", __p_request_type);
+  char *p_request_type = strdup(__p_request_type);
+  client_set_qtype(p_request_type);
+  free(p_request_type);
+  (*env)->ReleaseStringUTFChars(env, j_request_type, __p_request_type);
 
 	const char *__p_topdomain = (*env)->GetStringUTFChars(env, j_topdomain,
 			NULL);

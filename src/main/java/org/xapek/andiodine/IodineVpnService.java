@@ -220,7 +220,7 @@ public class IodineVpnService extends VpnService implements Runnable {
 
             int ret = IodineClient.connect(tunnelNamesver, mConfiguration.getTopDomain(), mConfiguration.getRawMode(),
                     mConfiguration.getLazyMode(), password, mConfiguration.getRequestHostnameSize(),
-                    mConfiguration.getResponseFragmentSize());
+                    mConfiguration.getResponseFragmentSize(), mConfiguration.getRequestType().name());
 
             String errorMessage = "";
             switch (ret) {
