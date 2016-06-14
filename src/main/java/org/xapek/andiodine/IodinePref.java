@@ -10,6 +10,7 @@ import org.xapek.andiodine.config.ConfigDatabase;
 import org.xapek.andiodine.config.IodineConfiguration;
 import org.xapek.andiodine.config.IodineConfiguration.NameserverMode;
 import org.xapek.andiodine.config.IodineConfiguration.RequestType;
+import org.xapek.andiodine.config.IodineConfiguration.RequestEncoding;
 
 public class IodinePref extends org.xapek.andiodine.preferences.PreferenceActivity {
     public static final String EXTRA_CONFIGURATION_ID = "uuid";
@@ -67,6 +68,13 @@ public class IodinePref extends org.xapek.andiodine.preferences.PreferenceActivi
         }
         addPreference(ConfigDatabase.COLUMN_CONF_REQUEST_TYPE, "Request Type", R.string.pref_help_request_type,
                 requestTypes, RequestType.AUTODETECT.name());
+        // Request Encoding
+        String[] requestEncodings = new String[RequestEncoding.values().length];
+        for (int i = 0; i < RequestEncoding.values().length; i++) {
+            requestEncodings[i] = RequestEncoding.values()[i].name();
+        }
+        addPreference(ConfigDatabase.COLUMN_CONF_REQUEST_ENCODING, "Request Encoding", R.string.pref_help_request_encoding,
+                requestEncodings, RequestEncoding.BASE128.name());
         // Lazy Mode
         addPreference(ConfigDatabase.COLUMN_CONF_LAZY_MODE, "Lazy mode", R.string.pref_help_lazy, true);
         // Raw Mode

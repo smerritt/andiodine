@@ -16,7 +16,7 @@ public class ConfigDatabase extends SQLiteOpenHelper {
     public static final String TAG = "ConfigDatabase";
 
     private static final String DATABASE_NAME = "andiodine.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     static public final String TABLE_NAME_CONF = "configuration";
     static public final String COLUMN_CONF_ID = "id";
     static public final String COLUMN_CONF_NAME = "name";
@@ -32,6 +32,7 @@ public class ConfigDatabase extends SQLiteOpenHelper {
     static public final String COLUMN_CONF_REQUEST_TYPE = "request_type";
     static public final String COLUMN_CONF_REQUEST_HOSTNAME_SIZE = "request_hostname_size";
     static public final String COLUMN_CONF_RESPONSE_FRAGMENT_SIZE = "response_fragment_size";
+    static public final String COLUMN_CONF_REQUEST_ENCODING = "request_encoding";
 
     private static final String createStmt = "CREATE TABLE " + TABLE_NAME_CONF + " (" + //
             COLUMN_CONF_ID + " INTEGER PRIMARY KEY," + //
@@ -48,7 +49,11 @@ public class ConfigDatabase extends SQLiteOpenHelper {
             COLUMN_CONF_REQUEST_TYPE + " TEXT," + //
             COLUMN_CONF_REQUEST_HOSTNAME_SIZE + " INTEGER," + //
             COLUMN_CONF_RESPONSE_FRAGMENT_SIZE + " INTEGER" + //
+            COLUMN_CONF_REQUEST_ENCODING + " TEXT" + //
             ");";
+
+    private static final String upgradeStmt1to2 = "ALTER TABLE " + TABLE_NAME_CONF +
+            " ADD COLUMN " + COLUMN_CONF_REQUEST_ENCODING + " TEXT;";
 
     public ConfigDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -61,6 +66,9 @@ public class ConfigDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2 && newVersion >= 2) {
+            db.execSQL(upgradeStmt1to2);
+        }
     }
 
     public void insert(ContentValues config) throws SQLException {

@@ -60,6 +60,15 @@
         (returning CNAME). Note that SRV, MX and A may/will cause additional lookups by "smart" caching nameservers to
         get an actual IP address, which may either slow down or fail completely.
     </string>
+    <string name="pref_help_request_encoding">Force downstream encoding type for all query type responses except
+        NULL. Default is autodetected, but may not spot all problems for the more advanced codecs. Use this option to
+        override the autodetection. Base32 is the lowest-grade codec and should always work; this is used when
+        autodetection fails. Base64 provides more bandwidth, but may not work on all nameservers. Base64u is equal to
+        Base64 except in using underscore (\'_\') instead of plus sign (\'+\'), possibly working where Base64 does not.
+        Base128 uses high byte values (mostly accented letters in iso8859-1), which might work with some nameservers.
+        For TXT queries, Raw will provide maximum performance, but this will only work if the nameserver path is fully
+        8-bit-clean for responses that are assumed to be "legible text".
+    </string>
     <string name="pref_request_hostname_size">Maximum size of upstream hostnames. Valid values are from 100 to 255.
         Default is 255. Decrease if you find some DNS relays answer to full-length queries unreliably giving widely
         varying results of fragment size autoprobe.

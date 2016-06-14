@@ -10,7 +10,7 @@ public class IodineClient {
 
     public static native int connect(String nameserv_addr, String topdomain, boolean raw_mode, boolean lazy_mode,
                                      String password, int request_hostname_size, int response_fragment_size,
-                                     String request_type);
+                                     String request_type, String request_encoding);
 
     public static native String getIp();
 

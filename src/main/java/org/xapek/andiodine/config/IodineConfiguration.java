@@ -14,6 +14,10 @@ public class IodineConfiguration {
 		AUTODETECT, NULL, TXT, SRV, MX, CNAME, A
 	}
 
+	public static enum RequestEncoding {
+		AUTODETECT, RAW, BASE128, BASE64, BASE64U, BASE32
+	}
+
 	private final ContentValues v;
 
 	public IodineConfiguration() {
@@ -73,6 +77,10 @@ public class IodineConfiguration {
 		return RequestType.valueOf(v.getAsString(ConfigDatabase.COLUMN_CONF_REQUEST_TYPE));
 	}
 
+	public RequestEncoding getRequestEncoding() {
+		return RequestEncoding.valueOf(v.getAsString(ConfigDatabase.COLUMN_CONF_REQUEST_ENCODING));
+	}
+
 	public String getTopDomain() {
 		return v.getAsString(ConfigDatabase.COLUMN_CONF_TOP_DOMAIN);
 	}
@@ -107,6 +115,10 @@ public class IodineConfiguration {
 
 	public void setRequestType(RequestType requestType) {
 		v.put(ConfigDatabase.COLUMN_CONF_REQUEST_TYPE, requestType.name());
+	}
+
+	public void setRequestEncoding(RequestEncoding requestEncoding) {
+		v.put(ConfigDatabase.COLUMN_CONF_REQUEST_ENCODING, requestEncoding.name());
 	}
 
 	public void setTopDomain(String topDomain) {
